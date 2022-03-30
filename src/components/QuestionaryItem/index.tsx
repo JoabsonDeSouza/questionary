@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent } from 'react'
-import { Option } from '../../../model/option'
-import { Question } from '../../../model/question'
+import { Option } from '../../model/option'
+import { Question } from '../../model/question'
 import he from 'he'
-import { UserAnswer } from '../../../model/userAnswer'
+import { UserAnswer } from '../../model/userAnswer'
 import * as DS from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 

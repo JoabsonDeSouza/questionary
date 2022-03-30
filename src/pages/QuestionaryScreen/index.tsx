@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, MouseEvent } from 'react'
 import { useApp } from '../../context/app'
 import { UserAnswer } from '../../model/userAnswer'
-import Card from './Card'
+import QuestionaryItem from '../../components/QuestionaryItem'
 import * as DS from '@material-ui/core'
 import Loading from '../../components/Loading'
 
@@ -54,7 +54,7 @@ const QuestionaryScreen = () => {
         </DS.Box>
 
         {listQuestions?.map((questionary, index) => (
-          <Card
+          <QuestionaryItem
             key={index}
             question={questionary.question}
             numberQuestion={index + 1}
