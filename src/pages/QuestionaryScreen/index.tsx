@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo, MouseEvent } from 'react'
+import { useCallback, useEffect, MouseEvent } from 'react'
 import { useApp } from '../../context/app'
-import { Option } from '../../model/option'
 import { UserAnswer } from '../../model/userAnswer'
 import Card from './Card'
+import * as DS from '@material-ui/core'
+import Loading from '../../components/Loading'
 
 const QuestionaryScreen = () => {
   const router = useRouter()
 
   const {
-    resultQuestionary,
+    listQuestions,
     getQuestionaryService,
     showButtonResult,
     updateAnswerUser,
@@ -34,51 +35,48 @@ const QuestionaryScreen = () => {
     router.replace('/checkresult')
   }, [])
 
-  const questionary = useMemo(() => {
-    return resultQuestionary?.results.map((question, index) => {
-      const listQuestions: Option[] = []
-
-      question.incorrect_answers.forEach((answer: string, index: number) => {
-        listQuestions.push({
-          value: answer,
-          label: answer,
-          correctAnswer: false,
-          id: index
-        })
-      })
-
-      listQuestions.push({
-        id: listQuestions.length + 1,
-        value: question.correct_answer,
-        label: question.correct_answer,
-        correctAnswer: true
-      })
-
-      listQuestions.sort(() => Math.random() - 0.5)
-
-      return (
-        <Card
-          key={question.question}
-          question={question}
-          numberQuestion={index + 1}
-          listQuestions={listQuestions}
-          handleUserResponse={handleUserResponse}
-        />
-      )
-    })
-  }, [resultQuestionary])
-
-  if (!resultQuestionary || !resultQuestionary?.results) {
-    return <h1>Carregando...</h1>
+  if (listQuestions.length === 0) {
+    return <Loading message="Loading Questions..." />
   }
 
   return (
-    <>
-      <div>{questionary}</div>
-      {showButtonResult && (
-        <button onClick={handleCheckResult}>Ver Resultado</button>
-      )}
-    </>
+    <DS.Container maxWidth="md">
+      <DS.Box bgcolor="white" padding={5}>
+        <DS.Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          marginBottom={6}
+        >
+          <DS.Typography variant="h3" color="primary">
+            ANSWER THE QUIZ
+          </DS.Typography>
+        </DS.Box>
+
+        {listQuestions?.map((questionary, index) => (
+          <Card
+            key={index}
+            question={questionary.question}
+            numberQuestion={index + 1}
+            listQuestions={questionary.list}
+            handleUserResponse={handleUserResponse}
+          />
+        ))}
+        {showButtonResult && (
+          <DS.Box width="100%" padding={1} marginBottom={10}>
+            <DS.Button
+              variant="contained"
+              color="primary"
+              onClick={handleCheckResult}
+              fullWidth
+              size="large"
+            >
+              <DS.Typography color="textSecondary">SEE RESULT</DS.Typography>
+            </DS.Button>
+          </DS.Box>
+        )}
+      </DS.Box>
+    </DS.Container>
   )
 }
 

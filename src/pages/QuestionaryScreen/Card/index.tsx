@@ -1,13 +1,10 @@
 import React, { useState, ChangeEvent } from 'react'
 import { Option } from '../../../model/option'
 import { Question } from '../../../model/question'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
 import he from 'he'
 import { UserAnswer } from '../../../model/userAnswer'
+import * as DS from '@material-ui/core'
+import { green } from '@material-ui/core/colors'
 
 interface CardProps {
   question: Question
@@ -15,6 +12,16 @@ interface CardProps {
   listQuestions: Option[]
   handleUserResponse: (response: UserAnswer) => void
 }
+
+const GreenRadio = DS.withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600]
+    }
+  },
+  checked: {}
+})(props => <DS.Radio color="default" {...props} />)
 
 const Card = ({
   question,
@@ -46,30 +53,41 @@ const Card = ({
   }
 
   return (
-    <div>
-      <h1>{`Question Nº ${numberQuestion}`}</h1>
-      <h3>{`Level Question: ${question.difficulty}`}</h3>
-
-      <FormControl component="fieldset">
-        <FormLabel component="legend">{he.decode(question.question)}</FormLabel>
-        <RadioGroup
+    <DS.Box
+      display="flex"
+      bgcolor="white"
+      flexDirection="column"
+      marginBottom={4}
+    >
+      <DS.Typography
+        variant="h5"
+        color="primary"
+      >{`Question Nº ${numberQuestion}`}</DS.Typography>
+      <DS.Box marginTop={1} marginBottom={1}>
+        <DS.Typography variant="body2">{`Level Question: ${question.difficulty}`}</DS.Typography>
+      </DS.Box>
+      <DS.FormControl component="fieldset">
+        <DS.Typography variant="h6">
+          {he.decode(question.question)}
+        </DS.Typography>
+        <DS.RadioGroup
           aria-label="gender"
           name="gender1"
           value={value}
           onChange={handleChange}
         >
           {listQuestions.map(option => (
-            <FormControlLabel
+            <DS.FormControlLabel
               key={option.value}
               value={option.value}
-              control={<Radio />}
+              control={<GreenRadio />}
               label={he.decode(option.label)}
               disabled={disable}
             />
           ))}
-        </RadioGroup>
-      </FormControl>
-    </div>
+        </DS.RadioGroup>
+      </DS.FormControl>
+    </DS.Box>
   )
 }
 

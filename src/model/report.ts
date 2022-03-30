@@ -5,4 +5,5 @@ export interface Report {
   totalIncorrect: number
   totalQuestions: number
   userAnswer: UserAnswer[]
+  date: Date
 }
