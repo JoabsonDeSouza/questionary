@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="ShoesStore" src="src/assets/page.png" width="300px" />
+    <img alt="Questionary" src="src/assets/page.png" width="400px" />
 </h1>
 
 # Questionary
@@ -12,7 +12,7 @@ Aplicação com intuito didático, desenvolvida com NextJS, Context API e Materi
 
 ## :camera: Resultado:
 
-![Questionary GIF](/src/assets/shoesstore.gif)
+![Questionary GIF](/src/assets/project.gif)
 
 ## :rocket: Tecnologias
 
